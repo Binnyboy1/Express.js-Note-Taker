@@ -35,8 +35,9 @@ app.get('/api/notes', (req, res) =>
  * return the new note to the client ~Kinda
 */
 app.post('/api/notes', (req, res) => {
-    const body = req.body;
-    res.json(`Title: ${body.title}, Text: ${body.text}`)
+    const { title, text } = req.body;
+    // console.log(body);
+    res.json(`Title: ${title}, Text: ${text}`)
 });
 
 
