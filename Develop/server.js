@@ -1,6 +1,8 @@
 // TODO: Import express
 const express = require('express');
 const path = require('path');
+// Helper method for generating unique ids
+const uuid = require('./helpers/uuid');
 
 // TODO: Import 'db.json' file
 const database = require('./db/db.json');
@@ -30,14 +32,22 @@ app.get('/api/notes', (req, res) =>
 
 /* Post Route that will
  * recieve a new note to save ✅-Working
- * give new note a unique id -Not yet
+ * give new note a unique id ✅-Working
+ * >> Learned from: 11-Express -> 17-Ins_POST-Fetch
  * add it to the db.json file -Not yet
  * return the new note to the client ~Kinda
 */
 app.post('/api/notes', (req, res) => {
     const { title, text } = req.body;
     // console.log(body);
-    res.json(`Title: ${title}, Text: ${text}`)
+
+    const newNote = {
+        title,
+        text,
+        id: uuid()
+    };
+
+    res.json(newNote);
 });
 
 
