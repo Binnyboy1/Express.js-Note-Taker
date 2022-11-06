@@ -1,10 +1,9 @@
-// TODO: Import express
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 // Helper method for generating unique ids
 const uuid = require('./helpers/uuid');
 
-// TODO: Import 'db.json' file
 const database = require('./db/db.json');
 
 const PORT = process.env.PORT || 3001;
@@ -47,7 +46,27 @@ app.post('/api/notes', (req, res) => {
         id: uuid()
     };
 
-    res.json(newNote);
+    // Convert the data to a string so we can save it
+    const newNoteStr = JSON.stringify(newNote, null, 4);
+
+    // Write the string to a file
+    fs.appendFile(`./db/db.json`, newNoteStr, (err) =>
+        err
+            ? console.error(err)
+            : console.log(
+                `Success:\n${newNote}`
+            )
+    );
+
+    // Create a response so we can show the user a confirmation
+    const response = {
+        status: 'success',
+        body: newNote
+    };
+
+    // Output a response
+    console.log(response);
+    res.status(201).json(response);
 });
 
 
