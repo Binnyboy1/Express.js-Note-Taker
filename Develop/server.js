@@ -1,8 +1,11 @@
 const express = require('express');
 const path = require('path');
-const fs = require('fs');
 // Helper method for generating unique ids
+// >> Learned from: 11-Express -> 17-Ins_POST-Fetch
 const uuid = require('./helpers/uuid');
+// 2 Custom functions grabbed from previous lessons
+// >> Learned from: 11-Express -> 21-Ins_Modular-Routing
+const readWrite = require('./helpers/readWrite');
 
 const database = require('./db/db.json');
 
@@ -32,31 +35,20 @@ app.get('/api/notes', (req, res) =>
 /* Post Route that will
  * recieve a new note to save ✅-Working
  * give new note a unique id ✅-Working
- * >> Learned from: 11-Express -> 17-Ins_POST-Fetch
- * add it to the db.json file -Not yet
- * return the new note to the client ~Kinda
+ * add it to the db.json file ✅-Working
+ * return the new note to the client ✅-Working
 */
 app.post('/api/notes', (req, res) => {
+    // Grabbing data
     const { title, text } = req.body;
-    // console.log(body);
-
     const newNote = {
         title,
         text,
         id: uuid()
     };
 
-    // Convert the data to a string so we can save it
-    const newNoteStr = JSON.stringify(newNote, null, 4);
-
     // Write the string to a file
-    fs.appendFile(`./db/db.json`, newNoteStr, (err) =>
-        err
-            ? console.error(err)
-            : console.log(
-                `Success:\n${newNote}`
-            )
-    );
+    readWrite.readAndAppend(newNote, './db/db.json');
 
     // Create a response so we can show the user a confirmation
     const response = {
@@ -65,7 +57,6 @@ app.post('/api/notes', (req, res) => {
     };
 
     // Output a response
-    console.log(response);
     res.status(201).json(response);
 });
 
