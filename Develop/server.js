@@ -1,13 +1,14 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 // Helper method for generating unique ids
 // >> Learned from: 11-Express -> 17-Ins_POST-Fetch
 const uuid = require('./helpers/uuid');
 // 2 Custom functions grabbed from previous lessons
 // >> Learned from: 11-Express -> 21-Ins_Modular-Routing
-const readWrite = require('./helpers/readWrite');
+const fsCmds = require('./helpers/fsCmds');
 
-const database = require('./db/db.json');
+// const database = require('./db/db.json');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -28,9 +29,17 @@ app.get('/notes', (req, res) =>
 );
 
 // GET Route that will return the content of our `db.json` file ✅-Working
-app.get('/api/notes', (req, res) =>
-    res.json(database)
-);
+app.get('/api/notes', (req, res) => {
+    fs.readFile('./db/db.json', 'utf8', function(err, data){
+        if (err) {
+            // Catch errors
+            console.error(err);
+        } else {
+            // Display the file content
+            res.status(201).json(JSON.parse(data));
+        }
+    });
+});
 
 /* Post Route that will
  * recieve a new note to save ✅-Working
@@ -48,7 +57,7 @@ app.post('/api/notes', (req, res) => {
     };
 
     // Write the string to a file
-    readWrite.readAndAppend(newNote, './db/db.json');
+    fsCmds.readAndAppend(newNote, './db/db.json');
 
     // Create a response so we can show the user a confirmation
     const response = {

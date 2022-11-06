@@ -1,5 +1,12 @@
 const fs = require('fs');
 
+const readFromFile = (destination, file) => {
+    fs.readFile(file, 'utf8', (err, data) =>
+        // Error catching
+        err ? console.error(err) : JSON.parse(data)
+    );
+};
+
 const writeToFile = (destination, content) => {
     // String conversion and formatting so we can write it to a file properly
     fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
@@ -24,6 +31,7 @@ const readAndAppend = (content, file) => {
 };
 
 module.exports = {
+    readFromFile,
     writeToFile,
     readAndAppend
 };
