@@ -6,7 +6,7 @@ This is the 'Module 11' challenge assignment for the UCF coding bootcamp.
 
 Based on the starter code we were given, we were tasked with adding to a back end using express.js methods. This project helps to build our skills with using said express methods to get more familiar with them.
 
-![Preview](./Develop/public/assets/images/preview.PNG)
+![Preview](./public/assets/images/preview.PNG)
 
 ## Installation
 
