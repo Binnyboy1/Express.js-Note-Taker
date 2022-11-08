@@ -34,4 +34,4 @@ Once you are at the main page:
 
 **Heads Up!** The *delete icon* wasn't implemented in this build. Clicking on it won't cause any changes to occur.
 
-[Demo](https://drive.google.com/file/d/1JodwnZ_2eSbFy6e7hIGN4CSbx6zwY6KU/view)
+[Demo](https://drive.google.com/file/d/1hErGgo40LOQIOOIuzXPi3cjYsG73m4Fm/view)
